@@ -20,6 +20,7 @@ LIMITE_SAQUES = 3
 
 while True:
 
+    time.sleep(2)
     opcao = input(menu).strip(" ")
 
     if opcao == "1":
