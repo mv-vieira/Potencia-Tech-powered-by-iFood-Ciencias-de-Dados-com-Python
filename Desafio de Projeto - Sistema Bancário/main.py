@@ -10,7 +10,7 @@ menu = """
 ----------------------
 
 Digite qual operação deseja realizar:
-"""
+=>"""
 
 saldo = 0
 limite_valor_saque = 500
@@ -20,7 +20,7 @@ LIMITE_SAQUES = 3
 
 while True:
 
-    opcao = input(menu)
+    opcao = input(menu).strip(" ")
 
     if opcao == "1":
         valor = float(input("Digite o valor que deseja depositar: \n"))
