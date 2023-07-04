@@ -1,10 +1,15 @@
-menu = """
+import time
 
+menu = """
+----------------------
 [1] - Depositar
 [2] - Sacar
 [3] - Extrato
-[4] - Sair
+[4] - Saldo
+[5] - Sair
+----------------------
 
+Digite qual operação deseja realizar:
 """
 
 saldo = 0
@@ -14,19 +19,21 @@ numero_saques = 0
 LIMITE_SAQUES = 3
 
 while True:
+
     opcao = input(menu)
 
     if opcao == "1":
-        valor = float(input("Digite o valor que deseja depositar: "))
+        valor = float(input("Digite o valor que deseja depositar: \n"))
 
         if valor > 0:
             saldo += valor
-            extrato += f"Depósito: {valor:.2f}\n"
+            extrato += f"Depósito: R${valor:.2f}\n"
+            print("\nDeposito realizado com sucesso.\n")
         else:
             print("Operação inválida, valor informado não pode ser depositado")
 
     elif opcao == "2":
-        valor = float(input("Digite o valor que deseja sacar: "))
+        valor = float(input("Digite o valor que deseja sacar: \n"))
 
         excedeu_saldo = valor > saldo
         excedeu_limite_valor = valor > limite_valor_saque
@@ -43,15 +50,30 @@ while True:
 
         elif valor > 0:
             saldo -= valor
-            extrato += f"Saque: {valor:.2f}\n"
+            extrato += f"Saque: R${valor:.2f}\n"
             numero_saques += 1
+            print(f"\nSaque no valor de R${valor:.2f} efetuado com sucesso\n")
 
         else:
             print("Operação falhou, o valor informado é inválido.")
 
     elif opcao == "3":
         extrato_nome = "Extrato"
-        print(extrato_nome.center(30,"-"))
-        print("Não foram realizadas movimentações")
+        print(extrato_nome.center(30,"="))
+        print("Não foram realizadas movimentações" if not extrato else extrato)
+        print(f"\nSaldo atual é de: R${saldo:.2f}\n")
+        print("=".center(30,"="))
+
+    elif opcao == "4":
+        print(f"\nSaldo atual é de: R${saldo:.2f}\n")
+
+    elif opcao == "5":
+        print("Saindo do sistema...")
+        time.sleep(3)
+        print("Obrigado, volte sempre!")
+        break
+
+    else:
+        print("Opção inválida, por favor selecione novamente a operação desejada.")
 
 
