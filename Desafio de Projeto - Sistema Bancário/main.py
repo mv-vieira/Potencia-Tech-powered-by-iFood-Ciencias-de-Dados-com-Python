@@ -8,7 +8,7 @@ def menu():
     [2] - Sacar
     [3] - Extrato
     [4] - Saldo
-    [5] - Sair
+    [5] - Criar Nova Conta
 
 --------------------------
 
@@ -19,7 +19,7 @@ Digite qual operação deseja realizar:
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
-        extrato += f"Depósito: R${valor:.2f}\n"
+        extrato += f"\tDepósito: R${valor:.2f}\n"
         print("\n=== Deposito realizado com sucesso. ===")
     else:
         print("\n@@@ Operação inválida, valor informado não pode ser depositado. @@@")
@@ -42,7 +42,7 @@ def sacar(*, saldo, valor, extrato, limite_valor_saque, numero_saques, limite_sa
 
     elif valor > 0:
         saldo -= valor
-        extrato += f"Saque: R${valor:.2f}\n"
+        extrato += f"\tSaque: R${valor:.2f}\n"
         numero_saques += 1
         print(f"\n=== Saque no valor de R${valor:.2f} efetuado com sucesso ===\n")
 
@@ -55,8 +55,33 @@ def exibir_extrato(saldo, / , * , extrato):
     extrato_nome = "Extrato"
     print(extrato_nome.center(30, "="))
     print("Não foram realizadas movimentações" if not extrato else extrato)
-    print(f"\nSaldo atual é de: R${saldo:.2f}\n")
+    print(f"\tSaldo atual é de: R${saldo:.2f}\n")
     print("=".center(30, "="))
+
+def criar_usuario(usuarios):
+    cpf = input("Informe o CPF (Somente números): ")
+    usuario = filtrar_usuario(cpf,usuarios)
+
+    if usuario:
+        print("\n@@@ Já existe um usuário com esse CPF. @@@")
+        return
+    nome = input("Informe o nome completo: ")
+    data_nascimento = input("Informe a data de nascimento: ")
+    endereco = input("Informe o seu endereço (ex: rua, nr, bairro - cidade/sigla estado): ")
+
+    usuarios.append(
+        {
+            "nome": nome,
+            "data_nascimento":data_nascimento,
+            "cpf":cpf,
+            "endereco":endereco,
+        }
+    )
+    print("=== Usuário criado com sucesso! ===")
+
+def filtrar_usuario(cpf, usuarios):
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
+    return usuarios_filtrados[0] if usuarios_filtrados else None
 
 
 saldo = 0
@@ -64,6 +89,7 @@ limite_valor_saque = 500
 extrato = ""
 numero_saques = 0
 LIMITE_SAQUES = 3
+usuarios = []
 
 while True:
 
@@ -94,10 +120,7 @@ while True:
         print(f"\nSaldo atual é de: R${saldo:.2f}\n")
 
     elif opcao == "5":
-        print("Saindo do sistema...")
-        time.sleep(3)
-        print("Obrigado, volte sempre!")
-        break
+        criar_usuario(usuarios)
 
     else:
         print("Opção inválida, por favor selecione novamente a operação desejada.")
