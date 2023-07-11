@@ -1,16 +1,33 @@
 import time
 
-menu = """
-----------------------
-[1] - Depositar
-[2] - Sacar
-[3] - Extrato
-[4] - Saldo
-[5] - Sair
-----------------------
+def menu():
+    menu = """
+    ----------MENU------------
 
-Digite qual operação deseja realizar:
-=>"""
+    [1] - Depositar
+    [2] - Sacar
+    [3] - Extrato
+    [4] - Saldo
+    [5] - Sair
+
+    --------------------------
+
+    Digite qual operação deseja realizar:
+    =>"""
+    return input(menu.strip(" "))
+
+def depositar(saldo, valor, extrato, /):
+    if valor > 0:
+        saldo += valor
+        extrato += f"Depósito: R${valor:.2f}\n"
+        print("\n=== Deposito realizado com sucesso. ===")
+    else:
+        print("\n@@@ Operação inválida, valor informado não pode ser depositado. @@@")
+
+    return saldo, extrato
+
+
+
 
 saldo = 0
 limite_valor_saque = 500
@@ -21,17 +38,12 @@ LIMITE_SAQUES = 3
 while True:
 
     time.sleep(2)
-    opcao = input(menu).strip(" ")
+    opcao = menu()
 
     if opcao == "1":
         valor = float(input("Digite o valor que deseja depositar: \n"))
 
-        if valor > 0:
-            saldo += valor
-            extrato += f"Depósito: R${valor:.2f}\n"
-            print("\nDeposito realizado com sucesso.\n")
-        else:
-            print("Operação inválida, valor informado não pode ser depositado")
+        saldo, extrato = depositar(saldo,valor,extrato)
 
     elif opcao == "2":
         valor = float(input("Digite o valor que deseja sacar: \n"))
