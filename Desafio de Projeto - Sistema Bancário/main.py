@@ -51,6 +51,14 @@ def sacar(*, saldo, valor, extrato, limite_valor_saque, numero_saques, limite_sa
 
     return saldo, extrato
 
+def exibir_extrato(saldo, / , * , extrato):
+    extrato_nome = "Extrato"
+    print(extrato_nome.center(30, "="))
+    print("Não foram realizadas movimentações" if not extrato else extrato)
+    print(f"\nSaldo atual é de: R${saldo:.2f}\n")
+    print("=".center(30, "="))
+
+
 saldo = 0
 limite_valor_saque = 500
 extrato = ""
@@ -80,11 +88,7 @@ while True:
         )
 
     elif opcao == "3":
-        extrato_nome = "Extrato"
-        print(extrato_nome.center(30,"="))
-        print("Não foram realizadas movimentações" if not extrato else extrato)
-        print(f"\nSaldo atual é de: R${saldo:.2f}\n")
-        print("=".center(30,"="))
+        exibir_extrato(saldo, extrato = extrato)
 
     elif opcao == "4":
         print(f"\nSaldo atual é de: R${saldo:.2f}\n")
